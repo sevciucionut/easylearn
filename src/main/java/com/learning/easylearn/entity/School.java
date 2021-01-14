@@ -3,8 +3,10 @@ package com.learning.easylearn.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
+
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -19,6 +21,9 @@ public class School extends BaseEntity {
     @Column(name = "Description")
     private String description;
 
-    @JoinColumn(name = "A")
-    private User administrator;
+    @OneToOne(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    @JoinColumn(name = "adminId")
+    private SchoolAdmin admin;
+
 }
