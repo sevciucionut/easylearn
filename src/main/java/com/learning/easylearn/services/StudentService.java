@@ -50,7 +50,12 @@ public class StudentService {
     }
 
     public void deleteStudent(Long id) {
-        studentRepository.deleteById(id);
+        Optional<Student> student = studentRepository.findById(id);
+        student.ifPresent(value -> {
+            value.setSchool(null);
+            value.setCourse(null);
+            studentRepository.delete(value);
+        });
     }
 
     public void asignSchoolToStudent(String username, Long schoolId, String title) {

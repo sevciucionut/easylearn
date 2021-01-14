@@ -13,10 +13,7 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 @Service
 public class TeacherService {
@@ -53,7 +50,12 @@ public class TeacherService {
     }
 
     public void deleteTeacher(Long id) {
-        teacherRepository.deleteById(id);
+        Optional<Teacher> teacher = teacherRepository.findById(id);
+        teacher.ifPresent(value -> {
+            value.setCourse(null);
+            value.setSchool(null);
+            teacherRepository.delete(value);
+        });
     }
 
     public void asignSchoolToTeacher(String username, Long courseId, String title) {

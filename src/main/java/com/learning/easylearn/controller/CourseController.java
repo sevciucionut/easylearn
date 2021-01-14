@@ -45,7 +45,7 @@ public class CourseController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<CourseDto> postCourse(@RequestParam(name = "delete") Long id) {
+    public ResponseEntity<CourseDto> deleteCourse(@RequestParam(name = "delete") Long id) {
         courseService.deleteCourse(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -6,8 +6,12 @@ import com.learning.easylearn.DTO.SchoolDto;
 import com.learning.easylearn.DTO.UserLoginDto;
 import com.learning.easylearn.entity.School;
 import com.learning.easylearn.entity.SchoolAdmin;
+import com.learning.easylearn.entity.Student;
+import com.learning.easylearn.entity.Teacher;
 import com.learning.easylearn.repository.SchoolAdminRepository;
 import com.learning.easylearn.repository.SchoolRepository;
+import com.learning.easylearn.repository.StudentRepository;
+import com.learning.easylearn.repository.TeacherRepository;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,12 +26,18 @@ public class SchoolService {
     DozerBeanMapper mapper;
     SchoolRepository schoolRepository;
     SchoolAdminRepository schoolAdminRepository;
+    StudentRepository studentRepository;
+    TeacherRepository teacherRepository;
 
     @Autowired
     public void setSchoolRepository(SchoolRepository schoolRepository,
-                                    SchoolAdminRepository schoolAdminRepository) {
+                                    SchoolAdminRepository schoolAdminRepository,
+                                    StudentRepository studentRepository,
+                                    TeacherRepository teacherRepository) {
         this.schoolRepository = schoolRepository;
         this.schoolAdminRepository = schoolAdminRepository;
+        this.studentRepository = studentRepository;
+        this.teacherRepository = teacherRepository;
     }
 
     public School createSchool(String username, String title, String description) {
@@ -53,6 +63,21 @@ public class SchoolService {
     }
 
     public void deleteSchool(Long id) {
-        schoolRepository.deleteById(id);
+        Optional<School> school = schoolRepository.findById(id);
+
+        school.ifPresent(value -> {
+            List<Student> students = studentRepository.findAllBySchool(value);
+            for (Student student : students) {
+                student.setSchool(null);
+                studentRepository.save(student);
+            }
+            List<Teacher> teachers = teacherRepository.findAllBySchool(value);
+            for (Teacher teacher : teachers) {
+                teacher.setSchool(null);
+                teacherRepository.save(teacher);
+            }
+            value.setAdmin(null);
+            schoolRepository.delete(value);
+        });
     }
 }

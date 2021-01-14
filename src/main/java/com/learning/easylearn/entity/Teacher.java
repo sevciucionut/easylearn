@@ -30,11 +30,11 @@ public class Teacher extends BaseEntity {
     @Column(name = "Password")
     private String password;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "SchoolId")
     private School school;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinTable(name = "TeacherCourse",
     joinColumns = @JoinColumn(name = "TeacherId"),
     inverseJoinColumns = @JoinColumn(name = "CourseId"))
