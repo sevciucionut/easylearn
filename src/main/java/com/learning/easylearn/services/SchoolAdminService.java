@@ -42,4 +42,11 @@ public class SchoolAdminService {
         schoolAdminRepository.deleteById(id);
     }
 
+    public void updateName(String firstName, String lastName, String username) {
+        SchoolAdmin schoolAdmin = schoolAdminRepository.findByUsername(username);
+        schoolAdmin.setFirstName(firstName);
+        schoolAdmin.setLastName(lastName);
+        schoolAdminRepository.save(schoolAdmin);
+    }
+
 }

@@ -24,4 +24,20 @@ public class StudentController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PutMapping("/school")
+    public ResponseEntity<Void> asignSchoolToStudent(@RequestParam(name = "username") String username,
+                                                     @RequestParam(name = "schoolId") Long schoolId,
+                                                     @RequestParam(name = "title") String title) {
+        studentService.asignSchoolToStudent(username, schoolId, title);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/course")
+    public ResponseEntity<Void> asignCourseToStudent(@RequestParam(name = "username") String username,
+                                                     @RequestParam(name = "courseId") Long courseId,
+                                                     @RequestParam(name = "title") String title) {
+        studentService.asignCourseToStudent(username, courseId, title);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

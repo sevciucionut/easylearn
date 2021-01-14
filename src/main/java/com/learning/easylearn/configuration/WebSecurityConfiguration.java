@@ -25,9 +25,18 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST,"/course/post").permitAll()
                 .antMatchers(HttpMethod.POST,"/school/create").permitAll()
                 .antMatchers(HttpMethod.PUT,"/school/admin").permitAll()
+                .antMatchers(HttpMethod.PUT,"/student/course").permitAll()
+                .antMatchers(HttpMethod.PUT,"/student/school").permitAll()
+                .antMatchers(HttpMethod.PUT,"/teacher/school").permitAll()
+                .antMatchers(HttpMethod.PUT,"/teacher/course").permitAll()
                 .antMatchers(HttpMethod.GET,"/school/all").permitAll()
                 .antMatchers(HttpMethod.GET,"/login").permitAll()
                 .antMatchers(HttpMethod.GET,"/course/all").permitAll()
+                .antMatchers(HttpMethod.DELETE,"/course/delete").permitAll()
+                .antMatchers(HttpMethod.DELETE,"/student/delete").permitAll()
+                .antMatchers(HttpMethod.DELETE,"/teacher/delete").permitAll()
+                .antMatchers(HttpMethod.DELETE,"/course/delete").permitAll()
+                .antMatchers(HttpMethod.DELETE,"/schooladmin/delete").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(new CORSFilter(), ChannelProcessingFilter.class)

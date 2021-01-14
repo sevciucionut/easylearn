@@ -21,4 +21,12 @@ public class SchoolAdminController {
         schoolAdminService.deleteSchoolAdmin(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<Void> updateName(@RequestParam(name = "firstname") String firstName,
+                                           @RequestParam(name = "lastName") String lastName,
+                                           @RequestParam(name = "username") String username) {
+        schoolAdminService.updateName(firstName, lastName, username);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

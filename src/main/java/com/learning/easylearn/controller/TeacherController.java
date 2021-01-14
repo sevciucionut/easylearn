@@ -21,4 +21,22 @@ public class TeacherController {
         teacherService.deleteTeacher(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PutMapping("/school")
+    public ResponseEntity<Void> asignSchoolToStudent(@RequestParam(name = "username") String username,
+                                                     @RequestParam(name = "schoolId") Long schoolId,
+                                                     @RequestParam(name = "title") String title) {
+        teacherService.asignSchoolToTeacher(username, schoolId, title);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/course")
+    public ResponseEntity<Void> asignCourseToTeacher(@RequestParam(name = "username") String username,
+                                                     @RequestParam(name = "courseId") Long courseId,
+                                                     @RequestParam(name = "title") String title) {
+        teacherService.asignCourseToTeacher(username, courseId, title);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 }
