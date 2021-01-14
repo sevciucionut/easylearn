@@ -28,11 +28,11 @@ public class SchoolAdmin extends BaseEntity {
     @Column(name = "Password")
     private String password;
 
-    @OneToOne(
-            mappedBy = "admin",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    private School school;
+//    @OneToOne(
+//            mappedBy = "admin",
+//            cascade = CascadeType.ALL,
+//            fetch = FetchType.LAZY
+//    )
+//    private School school;
 
 }

@@ -38,5 +38,5 @@ public class Student extends BaseEntity {
     @JoinTable(name = "StudentCourse",
             joinColumns = @JoinColumn(name = "StudentId"),
             inverseJoinColumns = @JoinColumn(name = "CourseId"))
-    private List<Course> course = new ArrayList<>();
+    private List<Course> course;
 }

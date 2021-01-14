@@ -5,6 +5,7 @@ import com.learning.easylearn.DTO.SchoolDto;
 import com.learning.easylearn.DTO.UserLoginDto;
 import com.learning.easylearn.entity.School;
 import com.learning.easylearn.entity.SchoolAdmin;
+import com.learning.easylearn.repository.SchoolAdminRepository;
 import com.learning.easylearn.services.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,15 +19,23 @@ import java.util.Optional;
 @RequestMapping("/school")
 public class SchoolController {
     SchoolService schoolService;
+    SchoolAdminRepository schoolAdminRepository;
 
     @Autowired
-    public void setSchoolService(SchoolService schoolService) {
+    public void setSchoolService(SchoolService schoolService, SchoolAdminRepository schoolAdminRepository) {
         this.schoolService = schoolService;
+        this.schoolAdminRepository = schoolAdminRepository;
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Optional<School>> createSchool(@RequestBody SchoolDto schoolDto) {
-        return new ResponseEntity<Optional<School>>(schoolService.createSchool(schoolDto), HttpStatus.OK);
+    public ResponseEntity<School> createSchool(@RequestParam(name = "username") String username,
+                                               @RequestParam(name = "title") String tile,
+                                               @RequestParam(name = "description") String description) {
+        if (schoolAdminRepository.existsByUsername(username)) {
+            return new ResponseEntity<School>(schoolService.createSchool(username, tile, description), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
     }
 
     @PutMapping("/admin")

@@ -7,5 +7,6 @@ public interface SchoolAdminRepository extends JpaRepository<SchoolAdmin, Long> 
     SchoolAdmin findByUsernameAndPassword(String username, String password);
     Boolean existsSchoolAdminByUsername(String username);
     SchoolAdmin findByUsername(String username);
+    Boolean existsByUsername(String username);
 
 }

@@ -5,6 +5,7 @@ import com.learning.easylearn.DTO.GetSchoolDto;
 import com.learning.easylearn.DTO.SchoolDto;
 import com.learning.easylearn.DTO.UserLoginDto;
 import com.learning.easylearn.entity.School;
+import com.learning.easylearn.entity.SchoolAdmin;
 import com.learning.easylearn.repository.SchoolAdminRepository;
 import com.learning.easylearn.repository.SchoolRepository;
 import org.dozer.DozerBeanMapper;
@@ -29,10 +30,14 @@ public class SchoolService {
         this.schoolAdminRepository = schoolAdminRepository;
     }
 
-    public Optional<School> createSchool(SchoolDto schoolDto) {
-        School school = mapper.map(schoolDto, School.class);
+    public School createSchool(String username, String title, String description) {
+        School school = new School();
+        SchoolAdmin schoolAdmin = schoolAdminRepository.findByUsername(username);
+        school.setTitle(title);
+        school.setDescription(description);
+        school.setAdmin(schoolAdmin);
         schoolRepository.save(school);
-        return schoolRepository.findById(school.getId());
+        return schoolRepository.findByIdAndTitle(school.getId(), title);
     }
 
     public List<GetSchoolDto> findAll(){
