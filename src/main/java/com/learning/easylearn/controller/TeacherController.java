@@ -16,6 +16,7 @@ public class TeacherController {
         this.teacherService = teacherService;
     }
 
+    @DeleteMapping("/delete")
     public ResponseEntity<Void> deleteTeacher(@RequestParam(name = "delete") Long id) {
         teacherService.deleteTeacher(id);
         return new ResponseEntity<>(HttpStatus.OK);
